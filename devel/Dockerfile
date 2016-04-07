@@ -17,7 +17,7 @@ RUN echo 'guest ALL=(ALL) NOPASSWD: /usr/bin/pacman' > \
 USER guest
 
 # Install pacaur
-ADD inst_pacaur.sh /home/guest/inst_pacaur.sh
+COPY inst_pacaur.sh /home/guest/inst_pacaur.sh
 RUN sh -x ./home/guest/inst_pacaur.sh && rm /home/guest/inst_pacaur.sh
 
 # Build the package

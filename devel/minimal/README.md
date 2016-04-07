@@ -46,5 +46,5 @@ For production containers a specific build tag should be used. Testing should be
 
 # Build tags
 
-    latest{-devel,-devel-minimal}
+    latest
     2016-04-05{-devel,-devel-minimal}
