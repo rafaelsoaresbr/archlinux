@@ -19,6 +19,3 @@ USER guest
 # Install pacaur
 COPY inst_pacaur.sh /home/guest/inst_pacaur.sh
 RUN sh -x ./home/guest/inst_pacaur.sh && rm /home/guest/inst_pacaur.sh
-
-# Build the package
-ENTRYPOINT ["/bin/sh","-c"]
