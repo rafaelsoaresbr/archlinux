@@ -21,6 +21,10 @@ For production containers a specific build tag should be used. Testing should be
 
 >docker run --rm -ti rafaelsoares/archlinux:YYYY-MM-DD-devel-minimal /bin/bash
 
+Sample project that uses this image to build an AUR package (Travis-CI):
+
+https://github.com/rafaelsoaresbr/package-query
+
 # Excluded base packages
     cryptsetup
     device-mapper
