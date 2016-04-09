@@ -4,7 +4,7 @@ Archlinux image with official repositories snapshots
 # Overview
 Archlinux installation built with mkimage-arch.sh.
 Timezone is set to utc and utf-8 locale is used.
-This repository provides archlinux, archlinux:devel and archlinux:devel-minimal images. The tags listed below may be used for specific builds.
+This repository provides archlinux, archlinux:XXXX-XX-XX-latest-devel and archlinux:XXXX-XX-XX-latest-devel-minimal images. The tags listed below may be used for specific builds.
 
 # Snapshot repository
 To keep docker containers consistent it uses official repositories snapshots stored at the Arch Linux Archive.
@@ -17,9 +17,9 @@ For production containers a specific build tag should be used. Testing should be
 
 >docker run --rm -ti rafaelsoares/archlinux:latest /bin/bash
 
->docker run --rm -ti rafaelsoares/archlinux:latest-devel /bin/bash
+>docker run --rm -ti rafaelsoares/archlinux:XXXX-XX-XX-latest-devel /bin/bash
 
->docker run --rm -ti rafaelsoares/archlinux:latest-devel-minimal /bin/bash
+>docker run --rm -ti rafaelsoares/archlinux:XXXX-XX-XX-latest-devel-minimal /bin/bash
 
 # Excluded base packages
     cryptsetup
@@ -47,4 +47,5 @@ For production containers a specific build tag should be used. Testing should be
 # Build tags
 
     latest
+    2016-04-09{-devel,-devel-minimal}
     2016-04-05{-devel,-devel-minimal}
