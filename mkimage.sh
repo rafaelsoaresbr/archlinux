@@ -33,10 +33,18 @@ script="$1"
 [ "$script" ] || usage
 shift
 
-echo $@ | grep -q . || {
-    echo "Must supply repo date"
-    exit 1
+ALT_DATE=
+if [[ $@ =~ ([0-9][0-9][0-9][0-9+])/([0-9][0-9+])/([0-9][0-9]+) ]]
+then
+    ALT_DATE="${BASH_REMATCH[1]}-${BASH_REMATCH[2]}-${BASH_REMATCH[3]}"
+		echo "Repo date: "$@
+else {
+	echo "Must supply a valid repo date eg. YYYY/MM/DD"
+	exit 1
 }
+fi
+
+	#statements
 
 if [ "$compression" == 'auto' ] || [ -z "$compression" ]
 then
@@ -81,7 +89,7 @@ nameserver 8.8.8.8
 nameserver 8.8.4.4
 EOF
 
-tarFile="$dir/archlinux-$@.tar${compression:+.$compression}"
+tarFile="$dir/archlinux-${ALT_DATE}.tar${compression:+.$compression}"
 touch "$tarFile"
 
 (
