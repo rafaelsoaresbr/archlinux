@@ -6,12 +6,8 @@ ADD minimal/rootfs/archlinux.tar.xz /
 # Install base-devel
 RUN pacman -S --needed --noprogressbar --noconfirm base-devel git; pacman -Scc --noprogressbar --noconfirm
 
-# Create an unprivileged user
-RUN useradd -m guest
-
-# Grant user guest sudo rights
-RUN echo 'guest ALL=(ALL) NOPASSWD: /usr/bin/pacman' > \
-/etc/sudoers.d/00-allowed
+# Create an unprivileged user; grant user guest sudo rights
+RUN useradd -m guest && touch /etc/sudoers.d/00-allowed && echo 'guest ALL=(ALL) NOPASSWD: /usr/bin/pacman' > /etc/sudoers.d/00-allowed
 
 # Change to an unprivileged user
 USER guest
