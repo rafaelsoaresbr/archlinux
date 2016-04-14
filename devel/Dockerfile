@@ -1,4 +1,4 @@
-FROM rafaelsoares/archlinux:lastest
+FROM rafaelsoares/archlinux:latest
 MAINTAINER Rafael Soares
 
 # Install base-devel
