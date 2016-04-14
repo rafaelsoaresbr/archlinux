@@ -5,7 +5,7 @@ mkimg="$(basename "$0")"
 
 usage() {
 	echo >&2 "usage: $mkimg [-d dir] [-t tag] [--compression algo| --no-compression] mkimage-arch repo_date"
-	echo >&2 "   ie: $mkimg mkimage-arch YYYY-MM-DD"
+	echo >&2 "   ie: $mkimg mkimage-arch YYYY/MM/DD"
 	exit 1
 }
 
@@ -115,4 +115,3 @@ fi
 if [ "$delDir" ]; then
 	( set -x; rm -rf "$dir" )
 fi
-
