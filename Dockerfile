@@ -1,4 +1,4 @@
 FROM scratch
 MAINTAINER Rafael Soares
 
-ADD devel/minimal/rootfs/archlinux-lastest.tar.xz /
+ADD devel/minimal/rootfs/archlinux-latest.tar.xz /
