@@ -6,7 +6,7 @@ mkimg="$(basename "$0")"
 
 usage() {
 	echo >&2 "usage: $mkimg [-d dir] [-t tag] [--compression algo| --no-compression] mkimage-arch repo_date"
-	echo >&2 "   ie: $mkimg mkimage-arch 2016/04/05"
+	echo >&2 "   ie: $mkimg mkimage-arch YYYY-MM-DD"
 	exit 1
 }
 

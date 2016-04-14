@@ -117,6 +117,6 @@ mknod -m 600 $DEV/initctl p
 mknod -m 666 $DEV/ptmx c 5 2
 ln -sf /proc/self/fd $DEV/fd
 
-tar --numeric-owner --xattrs --acls -C $ROOTFS -c . | docker import - $DOCKER_IMAGE_NAME
-docker run --rm -t $DOCKER_IMAGE_NAME echo Success.
+#tar --numeric-owner --xattrs --acls -C $ROOTFS -c . | docker import - $DOCKER_IMAGE_NAME
+#docker run --rm -t $DOCKER_IMAGE_NAME echo Success.
 #rm -rf $ROOTFS
