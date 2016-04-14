@@ -51,5 +51,6 @@ https://github.com/rafaelsoaresbr/package-query
 # Build tags
 
     latest
+    2016-04-13{-devel,-devel-minimal}
     2016-04-09{-devel,-devel-minimal}
     2016-04-05{-devel,-devel-minimal}
