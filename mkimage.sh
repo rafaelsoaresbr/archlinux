@@ -34,10 +34,10 @@ script="$1"
 shift
 
 ALT_DATE=
-if [[ $@ =~ ([0-9][0-9][0-9][0-9+])/([0-9][0-9+])/([0-9][0-9]+) ]]
+if [[ $@ =~ ^[0-9]{4}(\/[0-9]{2}){2}$ ]]
 then
-    ALT_DATE="${BASH_REMATCH[1]}-${BASH_REMATCH[2]}-${BASH_REMATCH[3]}"
-		echo "Repo date: "$@
+  ALT_DATE="${@//\//\-}"
+  echo "Repo date: "$@
 else {
 	echo "Must supply a valid repo date eg. YYYY/MM/DD"
 	exit 1
