@@ -6,7 +6,7 @@ mkimg="$(basename "$0")"
 
 usage() {
 	echo >&2 "usage: $mkimg [-d dir] [-t tag] [--compression algo| --no-compression] mkimage-arch repo_date"
-	echo >&2 "   ie: $mkimg mkimage-arch YYYY-MM-DD"
+	echo >&2 "   ie: $mkimg mkimage-arch YYYY/MM/DD"
 	exit 1
 }
 
@@ -34,10 +34,18 @@ script="$1"
 [ "$script" ] || usage
 shift
 
-echo $@ | grep -q . || {
-    echo "Must supply repo date"
-    exit 1
+ALT_DATE=
+if [[ $@ =~ ^[0-9]{4}(\/[0-9]{2}){2}$ ]]
+then
+  ALT_DATE="${@//\//\-}"
+  echo "Repo date: "$@
+else {
+	echo "Must supply a valid repo date eg. YYYY/MM/DD"
+	exit 1
 }
+fi
+
+	#statements
 
 if [ "$compression" == 'auto' ] || [ -z "$compression" ]
 then
@@ -82,12 +90,13 @@ nameserver 8.8.8.8
 nameserver 8.8.4.4
 EOF
 
-tarFile="$dir/rootfs.tar${compression:+.$compression}"
+tarFile="$dir/archlinux-${ALT_DATE}.tar${compression:+.$compression}"
 touch "$tarFile"
 
 (
 	set -x
-  docker run -t -i --rm archlinux /bin/bash
+	tar --numeric-owner --xattrs --acls -C $rootfsDir -c . | docker import - archlinux-run
+	docker run --rm -t -i archlinux-run /bin/bash
 )
 
 echo >&2 "+ cat > '$dir/Dockerfile'"
