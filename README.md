@@ -2,11 +2,19 @@
 
 Archlinux installation built with [mkimage.sh](https://github.com/rafaelsoaresbr/archlinux/blob/master/mkimage.sh), the build script is the same as the official [mkimage.sh](https://github.com/docker/docker/blob/master/contrib/mkimage.sh).
 Timezone is set to utc and utf-8 locale is used. This repository provides archlinux images. The tags listed below may be used for specific builds.
-The script is based on the official one, to create your own base image (on Arch Linux) run:
+The script is based on the official one, to build and run an image (on Arch Linux) run:
+
+```
+# ./runimage.sh mkimage-arch.sh YYYY/MM/DD
+```
+* This will generate a Docker Image and run a container.
+
+To create your own base image (on Arch Linux) run:
 
 ```
 # ./mkimage.sh mkimage-arch.sh YYYY/MM/DD
 ```
+* This will generate a compressed tarball that you can use on your own Dockerfile.
 
 # Snapshot repository
 To keep docker containers consistent it uses official repositories snapshots stored at the [Arch Linux Archive](https://archive.archlinux.org/).
@@ -47,6 +55,9 @@ $ docker run --rm -ti rafaelsoares/archlinux /bin/bash
 # Build tags
 
     latest
+    2016-04-27
+    2016-04-21
+    2016-04-17
     2016-04-13
     2016-04-09
     2016-04-05
