@@ -17,6 +17,7 @@ eval set -- "$optTemp"
 unset optTemp
 
 dir="$(mktemp -d ${TMPDIR:-/var/tmp}/docker-mkimage.XXXXXXXXXX)"
+IMGNAME=archlinux-test
 tag=
 compression="auto"
 while true; do
@@ -95,8 +96,8 @@ touch "$tarFile"
 
 (
 	set -x
-	tar --numeric-owner --xattrs --acls -C $rootfsDir -c . | docker import - archlinux-run
-	docker run --rm -t -i archlinux-run /bin/bash
+	tar --numeric-owner --xattrs --acls -C $rootfsDir -c . | docker import - $IMGNAME
+	docker run --rm -t -i $IMGNAME /bin/bash
 )
 
 echo >&2 "+ cat > '$dir/Dockerfile'"
