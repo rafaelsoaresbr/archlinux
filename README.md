@@ -55,6 +55,7 @@ $ docker run --rm -ti rafaelsoares/archlinux /bin/bash
 # Build tags
 
     latest
+    2016-06-17
     2016-04-27
     2016-04-21
     2016-04-17
