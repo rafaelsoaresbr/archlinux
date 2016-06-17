@@ -3,7 +3,7 @@ Archlinux Docker image with official repositories snapshots (base-devel)
 
 # Overview
 Archlinux Docker image with official repositories snapshots (base-devel), available at https://github.com/rafaelsoaresbr/archlinux.
-Timezone is set to utc and utf-8 locale is used. This repository provides archlinux images (FROM rafaelsoaresbr/archlinux) plus base-devel and pacaur.
+Timezone is set to utc and utf-8 locale is used. This repository provides archlinux images (FROM [rafaelsoaresbr/archlinux](https://hub.docker.com/r/rafaelsoares/archlinux/)) plus base-devel and pacaur.
 
 # Snapshot repository
 To keep docker containers consistent it uses official repositories snapshots stored at the Arch Linux Archive.

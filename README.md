@@ -7,14 +7,14 @@ The script is based on the official one, to build and run an image (on Arch Linu
 ```
 # ./runimage.sh mkimage-arch.sh YYYY/MM/DD
 ```
-* This will generate a Docker Image and run a container.
+* This will generate a Docker Image and run a container (requires arch-install-scripts, expect and docker).
 
 To create your own base image (on Arch Linux) run:
 
 ```
 # ./mkimage.sh mkimage-arch.sh YYYY/MM/DD
 ```
-* This will generate a compressed tarball that you can use on your own Dockerfile.
+* This will generate a compressed tarball that you can use on your own Dockerfile (requires arch-install-scripts and expect).
 
 # Snapshot repository
 To keep docker containers consistent it uses official repositories snapshots stored at the [Arch Linux Archive](https://archive.archlinux.org/).
