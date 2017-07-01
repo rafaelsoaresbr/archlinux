@@ -4,18 +4,28 @@ set -e
 mkimg="$(basename "$0")"
 
 usage() {
-	echo >&2 "usage: $mkimg [-d dir] [-t tag] [--compression algo| --no-compression] mkimage-arch repo_date"
-	echo >&2 "   ie: $mkimg mkimage-arch YYYY/MM/DD"
+       echo >&2 "usage: $mkimg [-d dir] [--compression algo| --no-compression] mkimage-arch repo_date"
+       echo >&2 "   ie: $mkimg mkimage-arch YYYY/MM/DD"
 	exit 1
 }
 
 scriptDir="$(dirname "$(readlink -f "$BASH_SOURCE")")/mkimage"
 
+os=
+os=$(uname -o)
+
+# set up path to gnu tools if solaris
+[[ $os == "Solaris" ]] && export PATH=/usr/gnu/bin:$PATH
+# TODO check for gnu-tar, gnu-getopt
+
+# TODO requires root/sudo due to some pkg operations. sigh.
+[[ $os == "Solaris" && $EUID != "0" ]] && echo >&2 "image create on Solaris requires superuser privilege"
+
 optTemp=$(getopt --options '+d:t:c:hC' --longoptions 'dir:,tag:,compression:,no-compression,help' --name "$mkimg" -- "$@")
 eval set -- "$optTemp"
 unset optTemp
 
-dir="$(mktemp -d ${TMPDIR:-/var/tmp}/docker-mkimage.XXXXXXXXXX)"
+dir=
 tag=
 compression="auto"
 while true; do
@@ -43,8 +53,6 @@ else {
 	exit 1
 }
 fi
-
-	#statements
 
 if [ "$compression" == 'auto' ] || [ -z "$compression" ]
 then
@@ -97,10 +105,10 @@ touch "$tarFile"
 	tar --numeric-owner --create --auto-compress --file "$tarFile" --directory "$rootfsDir" --transform='s,^./,,' .
 )
 
-echo >&2 "+ cat > '$dir/Dockerfile'"
-cat > "$dir/Dockerfile" <<EOF
+echo >&2 "+ cat > '$PWD/Dockerfile'"
+cat > "$PWD/Dockerfile" <<EOF
 FROM scratch
-ADD $(basename "$tarFile") /
+ADD devel/minimal/rootfs/$(basename "$tarFile") /
 EOF
 
 # if our generated image has a decent shell, let's set a default command
@@ -111,15 +119,16 @@ for shell in /bin/bash /usr/bin/fish /usr/bin/zsh /bin/sh; do
 	fi
 done
 
+( set -x; cp "$tarFile" "$PWD/devel/minimal/rootfs")
 ( set -x; rm -rf "$rootfsDir" )
 
-if [ "$tag" ]; then
-	( set -x; docker build -t "$tag" "$dir" )
-elif [ "$delDir" ]; then
-	# if we didn't specify a tag and we're going to delete our dir, let's just build an untagged image so that we did _something_
-	( set -x; docker build "$dir" )
-fi
+#if [ "$tag" ]; then
+#  ( set -x; docker build -t "$tag" "$dir" )
+#elif [ "$delDir" ]; then
+#  # if we didn't specify a tag and we're going to delete our dir, let's just build an untagged image so that we did _something_
+#  ( set -x; docker build "$dir" )
+#fi
 
-if [ "$delDir" ]; then
-	( set -x; rm -rf "$dir" )
-fi
+#if [ "$delDir" ]; then
+#  ( set -x; rm -rf "$dir" )
+#fi

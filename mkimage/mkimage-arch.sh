@@ -48,7 +48,8 @@ IFS=','
 PKGIGNORE="${PKGIGNORE[*]}"
 unset IFS
 
-case "$(uname -m)" in
+arch="$(uname -m)"
+case "$arch" in
 	armv*)
 		if pacman -Q archlinuxarm-keyring >/dev/null 2>&1; then
 			pacman-key --init
@@ -57,12 +58,14 @@ case "$(uname -m)" in
 			echo "Could not find archlinuxarm-keyring. Please, install it and run pacman-key --populate archlinuxarm"
 			exit 1
 		fi
-		PACMAN_CONF='./mkimage-archarm-pacman.conf'
+		PACMAN_CONF=$(mktemp ${TMPDIR:-/var/tmp}/pacman-conf-archlinux-XXXXXXXXX)
+		version="$(echo $arch | cut -c 5)"
+		sed "s/Architecture = armv/Architecture = armv${version}h/g" './mkimage-archarm-pacman.conf' > "${PACMAN_CONF}"
 		PACMAN_MIRRORLIST='Server = https://archive.archlinux.org/repos/'$REPO_DATE'/$repo/os/$arch'
 		PACMAN_EXTRA_PKGS='archlinuxarm-keyring'
-		EXPECT_TIMEOUT=120
+		EXPECT_TIMEOUT=1800 # Most armv* based devices can be very slow (e.g. RPiv1)
 		ARCH_KEYRING=archlinuxarm
-		DOCKER_IMAGE_NAME=archlinuxarm
+		DOCKER_IMAGE_NAME="armv${version}h/archlinux"
 		;;
 	*)
 		PACMAN_CONF='./mkimage-arch-pacman.conf'
@@ -83,12 +86,12 @@ expect <<EOF
 		exp_send -s -- \$arg
 	}
 	set timeout $EXPECT_TIMEOUT
-
 	spawn pacstrap -C $PACMAN_CONF -c -d -G -i $ROOTFS base haveged $PACMAN_EXTRA_PKGS --ignore $PKGIGNORE
 	expect {
 		-exact "anyway? \[Y/n\] " { send -- "n\r"; exp_continue }
 		-exact "(default=all): " { send -- "\r"; exp_continue }
 		-exact "installation? \[Y/n\]" { send -- "y\r"; exp_continue }
+		-exact "delete it? \[Y/n\]" { send -- "y\r"; exp_continue }
 	}
 EOF
 
