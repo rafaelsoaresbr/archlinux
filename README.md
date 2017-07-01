@@ -19,25 +19,28 @@ Then you can build and run you Docker image with (requires Docker):
 # docker run --rm -it archlinux:YYYY-MM-DD /bin/bash
 ```
 
-# Vagrant
+## Vagrant
 
 If you're running others OS you can run a Vagrant Box to build this project (requires Vagrant):
 
  ```
- vagrant up
+$ vagrant up
  ```
 
  ```
- vagrant ssh
+$ vagrant ssh
 ```
 
+ ```
+$ cd vagrant
+ ```
 * Follow the instructions above to build your base image.
 
-# Snapshot repository
+## Snapshot repository
 To keep docker containers consistent it uses official repositories snapshots stored at the [Arch Linux Archive](https://archive.archlinux.org/).
 This allows installing new packages at a precise moment.
 
-# Usage
+## Usage
 
 Synchronizing the pacman repository's by running pacman -Sy or upgrading with pacman -Syu is unnecessary and will have no impact.
 For production containers a specific build tag should be used. Testing should be done before updating the build tag in production containers to ensure the newer packages work with your codebase.
@@ -46,7 +49,7 @@ For production containers a specific build tag should be used. Testing should be
 $ docker run --rm -ti rafaelsoares/archlinux /bin/bash
 ```
 
-# Excluded base packages
+## Excluded base packages
     cryptsetup
     device-mapper
     dhcpcd
@@ -69,7 +72,7 @@ $ docker run --rm -ti rafaelsoares/archlinux /bin/bash
     vi
     xfsprogs
 
-# Build tags
+## Build tags
 
     latest
     2017-06-30
