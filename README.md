@@ -19,6 +19,19 @@ Then you can build and run you Docker image with (requires Docker):
 # docker run --rm -it archlinux:YYYY-MM-DD /bin/bash
 ```
 
+# Vagrant
+
+If you're running others OS you can run a Vagrant Box to build this project (requires Vagrant):
+
+ ```
+ vagrant up
+ ```
+
+ ```
+ vagrant ssh
+```
+
+* Follow the instructions above to build your base image.
 
 # Snapshot repository
 To keep docker containers consistent it uses official repositories snapshots stored at the [Arch Linux Archive](https://archive.archlinux.org/).
@@ -59,6 +72,7 @@ $ docker run --rm -ti rafaelsoares/archlinux /bin/bash
 # Build tags
 
     latest
+    2017-06-30
     2016-06-17
     2016-04-27
     2016-04-21
